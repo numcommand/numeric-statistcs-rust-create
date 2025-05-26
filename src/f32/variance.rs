@@ -6,6 +6,17 @@ use super::average;
 ///
 /// Filter NaN values in the stream.
 ///
+/// # Example
+///
+/// ```rust
+/// #[macro_use]
+/// use numeric_statistics::assert_eq_f32;
+/// use numeric_statistics::f32::variance::*;
+/// let values = &[1.0, 2.0, 4.0];
+/// let variance = variance(values);
+/// assert_eq_f32!(variance, 2.3333333 as f32);
+/// ```
+/// 
 pub fn variance<T: AsRef<[f32]>>(values: T) -> f32 {
     let values = values.as_ref();
     if values.is_empty() { return f32::NAN; }
@@ -19,6 +30,18 @@ pub fn variance<T: AsRef<[f32]>>(values: T) -> f32 {
 /// Return NaN if the values are empty.
 ///
 /// Filter NaN values in the stream.
+/// 
+/// # Example
+///
+/// ```rust
+/// #[macro_use]
+/// use numeric_statistics::assert_eq_f32;
+/// use numeric_statistics::f32::{average::*, variance::*};
+/// let values = &[1.0, 2.0, 4.0];
+/// let average = average(values);
+/// let variance = variance_with_average(values, average);
+/// assert_eq_f32!(variance, 2.3333333 as f32);
+/// ```
 /// 
 pub fn variance_with_average<T: AsRef<[f32]>>(values: T, average: f32) -> f32 {
     let values = values.as_ref();
@@ -42,6 +65,7 @@ pub fn variance_with_average<T: AsRef<[f32]>>(values: T, average: f32) -> f32 {
 #[cfg(test)]
 mod test {
     use super::*;
+    use crate::assert_eq_f32;
 
     #[test]
     fn test_empty() {
@@ -58,19 +82,19 @@ mod test {
     #[test]
     fn test_value() {
         let x: &[f32] = &[1.0];
-        assert_eq_float!(variance(x), 0.0);
+        assert_eq_f32!(variance(x), 0.0);
     }
 
     #[test]
     fn test_values_ascending() {
         let x = &[1.0, 2.0, 4.0];
-        assert_eq_float!(variance(x), 2.3333333333333333 as f32);
+        assert_eq_f32!(variance(x), 2.3333333333333333 as f32);
     }
 
     #[test]
     fn test_values_ascending_and_nans() {
         let x = &[1.0, f32::NAN, 2.0, f32::NAN, 4.0];
-        assert_eq_float!(variance(x), 2.3333333333333333 as f32);
+        assert_eq_f32!(variance(x), 2.3333333333333333 as f32);
     }
 
 }

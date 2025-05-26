@@ -5,6 +5,17 @@ use super::average;
 /// Return NaN if the values are empty.
 ///
 /// Filter NaN values in the stream.
+///
+/// # Example
+///
+/// ```rust
+/// #[macro_use]
+/// use numeric_statistics::assert_eq_f64;
+/// use numeric_statistics::f64::variance::*;
+/// let values = &[1.0, 2.0, 4.0];
+/// let variance = variance(values);
+/// assert_eq_f64!(variance,  2.3333333333333333 as f64);
+/// ```
 /// 
 pub fn variance<T: AsRef<[f64]>>(values: T) -> f64 {
     let values = values.as_ref();
@@ -19,6 +30,18 @@ pub fn variance<T: AsRef<[f64]>>(values: T) -> f64 {
 /// Return NaN if the values are empty.
 ///
 /// Filter NaN values in the stream.
+/// 
+/// # Example
+///
+/// ```rust
+/// #[macro_use]
+/// use numeric_statistics::assert_eq_f64;
+/// use numeric_statistics::f64::{average::*, variance::*};
+/// let values = &[1.0, 2.0, 4.0];
+/// let average = average(values);
+/// let variance = variance_with_average(values, average);
+/// assert_eq_f64!(variance, 2.3333333333333333 as f64);
+/// ```
 /// 
 pub fn variance_with_average<T: AsRef<[f64]>>(values: T, average: f64) -> f64 {
     let values = values.as_ref();
@@ -42,6 +65,7 @@ pub fn variance_with_average<T: AsRef<[f64]>>(values: T, average: f64) -> f64 {
 #[cfg(test)]
 mod test {
     use super::*;
+    use crate::assert_eq_f64;
 
     #[test]
     fn test_empty() {
@@ -58,19 +82,19 @@ mod test {
     #[test]
     fn test_value() {
         let x: &[f64] = &[1.0];
-        assert_eq_float!(variance(x), 0.0);
+        assert_eq_f64!(variance(x), 0.0);
     }
 
     #[test]
     fn test_values_ascending() {
         let x = &[1.0, 2.0, 4.0];
-        assert_eq_float!(variance(x), 2.3333333333333333);
+        assert_eq_f64!(variance(x), 2.3333333333333333);
     }
 
     #[test]
     fn test_values_ascending_and_nans() {
         let x = &[1.0, f64::NAN, 2.0, f64::NAN, 4.0];
-        assert_eq_float!(variance(x), 2.3333333333333333);
+        assert_eq_f64!(variance(x), 2.3333333333333333);
     }
 
 }

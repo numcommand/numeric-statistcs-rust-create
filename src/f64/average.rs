@@ -9,6 +9,17 @@
 /// 
 /// Filter NaN values in the stream.
 /// 
+/// # Example
+///
+/// ```rust
+/// #[macro_use]
+/// use numeric_statistics::assert_eq_f64;
+/// use numeric_statistics::f64::average::*;
+/// let values = &[1.0, 2.0, 4.0];
+/// let average = average(values);
+/// assert_eq_f64!(average, 2.3333333333333333 as f64);
+/// ```
+/// 
 pub fn average<T: AsRef<[f64]>>(values: T) -> f64 {
     let values = values.as_ref();
     if values.is_empty() { return f64::NAN; }
@@ -20,12 +31,13 @@ pub fn average<T: AsRef<[f64]>>(values: T) -> f64 {
             len += 1;
         }
     );
-    sum / len as f64
+    sum / (len as f64)
 }
 
 #[cfg(test)]
 mod test {
     use super::*;
+    use crate::assert_eq_f64;
 
     #[test]
     fn test_empty() {
@@ -42,31 +54,31 @@ mod test {
     #[test]
     fn test_value() {
         let x: &[f64] = &[1.0];
-        assert_eq!(average(x), 1.0);
+        assert_eq_f64!(average(x), 1.0);
     }
 
     #[test]
     fn test_values_ascending() {
         let x = &[1.0, 2.0, 4.0];
-        assert_eq!(average(x), 2.3333333333333333);
+        assert_eq_f64!(average(x), 2.3333333333333333 as f64);
     }
 
     #[test]
     fn test_values_ascending_and_nans() {
         let x = &[1.0, f64::NAN, 2.0, f64::NAN, 4.0];
-        assert_eq!(average(x), 2.3333333333333333);
+        assert_eq_f64!(average(x), 2.3333333333333333 as f64);
     }
 
     #[test]
     fn test_values_descending() {
         let x = &[4.0, 2.0, 1.0];
-        assert_eq!(average(x), 2.3333333333333333);
+        assert_eq_f64!(average(x), 2.3333333333333333 as f64);
     }
 
     #[test]
     fn test_values_descending_and_nans() {
         let x = &[4.0, f64::NAN, 2.0, f64::NAN, 1.0];
-        assert_eq!(average(x), 2.3333333333333333);
+        assert_eq_f64!(average(x), 2.3333333333333333 as f64);
     }
 
 }

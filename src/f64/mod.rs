@@ -1,7 +1,4 @@
-#[macro_use]
-pub mod assert_eq_float;
-#[allow(unused_imports)] 
-use assert_eq_float::*;
+pub mod assert_eq_f64;
 
 pub mod min; 
 #[allow(unused_imports)] 

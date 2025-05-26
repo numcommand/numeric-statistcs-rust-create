@@ -13,6 +13,15 @@
 /// libm’s fmin. In particular, if the inputs compare equal (such as for the case
 /// of +0.0 and -0.0), either input may be returned non-deterministically.
 ///
+/// # Example
+///
+/// ```rust
+/// use numeric_statistics::f64::min::*;
+/// let values = &[1.0, 2.0, 4.0];
+/// let min = min(values);
+/// assert_eq!(min, 1.0);
+/// ```
+/// 
 pub fn min<T: AsRef<[f32]>>(values: T) -> f32 {
     let values = values.as_ref();
     if values.is_empty() { return f32::NAN; }
