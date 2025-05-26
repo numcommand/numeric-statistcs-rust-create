@@ -27,6 +27,29 @@
 //! assert_eq_f64!(standard_deviation, 1.5275252316519465 as f64);
 //! ```
 //! 
+//! ## All
+//! 
+//! You can get all the numeric statistics in one struct like this:
+//! 
+//! ```rust
+//! #[macro_use]
+//! use numeric_statistics::assert_eq_f64;
+//! use numeric_statistics::f64::all::All;
+//! let values = &[1.0, 2.0, 4.0];
+//! let all = All::new(values);
+//! assert_eq!(all.min, 1.0);
+//! assert_eq!(all.max, 4.0);
+//! assert_eq_f64!(all.average, 2.3333333333333333 as f64);
+//! assert_eq_f64!(all.variance, 2.3333333333333333 as f64);
+//! assert_eq_f64!(all.standard_deviation, 1.5275252316519465 as f64);
+//! ```
+//! 
+//! ## Num Command
+//! 
+//! This is a work-in-progress to translate the Num Command software from POSIX into Rust.
+//! 
+//! <https://github.com/numcommand/num>
+//! 
 //! ## Num Command
 //! 
 //! This is a work-in-progress to translate the Num Command software from POSIX into Rust.
@@ -34,5 +57,6 @@
 //! <https://github.com/numcommand/num>
 //! 
 
+pub mod all;
 pub mod f32;
 pub mod f64;
