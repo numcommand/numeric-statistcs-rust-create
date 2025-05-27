@@ -32,6 +32,26 @@ impl All {
     }
 }
 
+use std::fmt;
+impl fmt::Display for All {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f,
+            concat!(
+                "min: {:?}\n",
+                "max: {:?}\n",
+                "average: {:?}\n",
+                "variance: {:?}\n",
+                "standard deviation: {:?}\n",
+            ),
+            self.min,
+            self.max,
+            self.average,
+            self.variance,
+            self.standard_deviation,
+        )
+    }
+}
+
 #[cfg(test)]
 mod test {
     use super::*;
@@ -46,6 +66,22 @@ mod test {
         assert_eq_f32!(all.average, 2.3333333);
         assert_eq_f32!(all.variance, 2.3333333);
         assert_eq_f32!(all.standard_deviation, 1.5275253);
+    }
+
+    #[test]
+    fn test_fmt() {
+        let x = &[1.0, 2.0, 4.0];
+        let all = All::new(x);
+        assert_eq!(
+            all.to_string(),
+            concat!(
+                "min: 1.0\n",
+                "max: 4.0\n",
+                "average: 2.3333333\n",
+                "variance: 2.3333335\n",
+                "standard deviation: 1.5275253\n"
+            )
+        );
     }
 
 }
