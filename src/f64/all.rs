@@ -1,3 +1,4 @@
+#[derive(Debug, Clone)]
 pub struct All {
     pub min: f64,
     pub max: f64,

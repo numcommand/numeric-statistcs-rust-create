@@ -29,7 +29,7 @@ assert_eq_f64!(standard_deviation, 1.5275252316519465 as f64);
 
 ## All
 
-You can get all the numeric statistics in one struct like this:
+You can create all the numeric statistics all within one struct:
 
 ```rust
 #[macro_use]
